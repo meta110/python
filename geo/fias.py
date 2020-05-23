@@ -2,8 +2,8 @@
 """
 Created on Sat May 23 02:21:29 2020
 
-https://fias.nalog.ru/Updates
-Loads all ADDROB*.dbf files to PostgreSQL database 
+Loads all actual FIAS data from ADDROB*.dbf files to PostgreSQL database 
+Actual version of files is always here: https://fias.nalog.ru/Updates
 
 @author: meta110
 """
@@ -15,8 +15,8 @@ import datetime
 from sqlalchemy import create_engine
 
 engine = create_engine('postgresql://LOGIN:PASSWORD@SERVER:PORT/DATABASE')
-table_name = "fias_AddressObjects"
-mypath = "e:/kladr/fias_dbf" 
+table_name = "fias_AddressObjects" # name of the table to work with
+mypath = "e:/kladr/fias_dbf" # folder with unzipped DBF files
 
 def get_name(file):
     print(datetime.datetime.now())
@@ -26,7 +26,7 @@ def get_name(file):
     dbf = DBF(fullpath, lowernames = True)
     df = DataFrame(iter(dbf))
     print("start inserting data to table " + table_name)
-    actual = df.query('actstatus == 1')
+    actual = df.query('actstatus == 1') # discards a lot of obsolete data
     actual.to_sql( 
         table_name, 
         engine,
