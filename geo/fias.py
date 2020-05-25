@@ -45,7 +45,7 @@ clear_table = engine.execute('delete from "' + table_name + '"') #cleans old dat
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f)) & ("ADDROB" in f)]
 
 count = 0
-for file in onlyfiles[1:]:
+for file in onlyfiles:
     count += get_name(file)
 
 print("All transactions completed. " + str(count) + " rows inserted")    
